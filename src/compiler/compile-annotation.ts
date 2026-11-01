@@ -11,6 +11,7 @@ import {
 } from "./variable-access.js";
 import { escapeForDoubleQuoteString } from "../services/codegen/escape.js";
 import { Logger } from "../services/logger/index.js";
+import { registryBinding } from "./registry.js";
 
 /**
  * The functions shipped in the generated registry.js file, by the annotation
@@ -117,7 +118,7 @@ export function compileAnnotation(
 		!options.some((option) => option.name === "__proto__")
 			? ", true"
 			: "";
-	return `registry.${functionName}("${locale}", ${str}, ${compileOptions(optionsOf, options, declarations)}${cacheable})`;
+	return `${registryBinding}.${functionName}("${locale}", ${str}, ${compileOptions(optionsOf, options, declarations)}${cacheable})`;
 }
 
 const icuDateTimeStyles = new Set(["short", "medium", "long", "full"]);
